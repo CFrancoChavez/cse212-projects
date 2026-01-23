@@ -12,6 +12,11 @@ public class TakingTurnsQueueTests
     // run until the queue is empty
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, Sue, Tim, Tim
     // Defect(s) Found: 
+    // Defect(s) Found:
+    // - People with 0 or negative turns were not re-enqueued.
+    // - Infinite turns were treated as finite.
+    // - Queue ended prematurely in infinite-turn scenarios.
+
     public void TestTakingTurnsQueue_FiniteRepetition()
     {
         var bob = new Person("Bob", 2);
