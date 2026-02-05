@@ -156,6 +156,22 @@ public static class Recursion
     public static void WildcardBinary(string pattern, List<string> results)
     {
         // TODO Start Problem 4
+            int index = pattern.IndexOf('*');
+        if (index == -1)
+        {
+            results.Add(pattern);
+            return;
+        }
+
+        // Dividimos el string
+        string before = pattern[..index];
+        string after = pattern[(index + 1)..];
+
+        // Reemplazamos '*' por '0'
+        WildcardBinary(before + "0" + after, results);
+
+        // Reemplazamos '*' por '1'
+        WildcardBinary(before + "1" + after, results);
     }
 
     /// <summary>
@@ -171,10 +187,39 @@ public static class Recursion
         }
         
         // currPath.Add((1,2)); // Use this syntax to add to the current path
+        currPath.Add((x, y));
 
         // TODO Start Problem 5
         // ADD CODE HERE
+            if (maze.IsEnd(x, y))
+        {
+            results.Add(currPath.AsString());
+            currPath.RemoveAt(currPath.Count - 1);
+            return;
+        }
 
+        // Movimientos posibles: derecha, abajo, izquierda, arriba
+        int[,] moves = {
+            { 1, 0 },  // derecha
+            { 0, 1 },  // abajo
+            { -1, 0 }, // izquierda
+            { 0, -1 }  // arriba
+        };
+
+        for (int i = 0; i < moves.GetLength(0); i++)
+        {
+            int newX = x + moves[i, 0];
+            int newY = y + moves[i, 1];
+
+            if (maze.IsValidMove(currPath, newX, newY))
+
+            {
+                SolveMaze(results, maze, newX, newY, currPath);
+            }
+        }
+
+        // Backtracking
+        currPath.RemoveAt(currPath.Count - 1);
         // results.Add(currPath.AsString()); // Use this to add your path to the results array keeping track of complete maze solutions when you find the solution.
     }
 }
