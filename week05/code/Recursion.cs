@@ -15,10 +15,15 @@ public static class Recursion
     public static int SumSquaresRecursive(int n)
     {
         // TODO Start Problem 1
-        return 0;
+        // Base case
+        if (n <= 0)
+            return 0;
+
+        // Recursive case
+        return (n * n) + SumSquaresRecursive(n - 1);
     }
 
-    /// <summary>
+    /// <summary>  
     /// #############
     /// # Problem 2 #
     /// #############
@@ -40,6 +45,30 @@ public static class Recursion
     public static void PermutationsChoose(List<string> results, string letters, int size, string word = "")
     {
         // TODO Start Problem 2
+        // Caso base
+        if (word.Length == size)
+        {
+            results.Add(word);
+            return;
+        }
+
+        // Elegir cada letra disponible
+        for (int i = 0; i < letters.Length; i++)
+        {
+            char current = letters[i];
+
+            // Letras restantes (sin la actual)
+            string remaining =
+                letters.Substring(0, i) + letters.Substring(i + 1);
+
+            // Llamada recursiva
+            PermutationsChoose(
+                results,
+                remaining,
+                size,
+                word + current
+            );
+        }
     }
 
     /// <summary>
