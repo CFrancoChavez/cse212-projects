@@ -12,7 +12,10 @@ public class Node
     public void Insert(int value)
     {
         // TODO Start Problem 1
-
+        if (value == Data)
+        {            // Do not insert duplicates
+            return;
+        }
         if (value < Data)
         {
             // Insert to the left
@@ -34,12 +37,48 @@ public class Node
     public bool Contains(int value)
     {
         // TODO Start Problem 2
-        return false;
+        if (value == Data)
+        {
+            return true;
+        }
+         if (value < Data)
+        {
+            // Si no hay hijo izquierdo, el valor no existe
+            if (Left is null)
+                return false;
+
+            // Llamada recursiva
+            return Left.Contains(value);
+        }
+        else // value > Data
+        {
+            // Caso 3: buscar en el subárbol derecho
+            if (Right is null)
+                return false;
+
+            // Llamada recursiva
+            return Right.Contains(value);
+        }
     }
 
     public int GetHeight()
     {
         // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
+        // Altura del subárbol izquierdo
+        int leftHeight = 0;
+        if (Left != null)
+        {
+            leftHeight = Left.GetHeight();
+        }
+
+        // Altura del subárbol derecho
+        int rightHeight = 0;
+        if (Right != null)
+        {
+            rightHeight = Right.GetHeight();
+        }
+
+        // Altura del nodo actual
+        return 1 + Math.Max(leftHeight, rightHeight);
     }
 }
